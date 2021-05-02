@@ -61,4 +61,40 @@ var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_w
         }
     }
 
+    L.geoJson(data, {
+
+        pointToLayer: function (feature, latlong) {
+          return L.circleMarker(latlong);
+        },
     
+        style: styleInfo,
+    
+        onEachFeature: function (feature, layer) {
+    
+          layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location:<br>" + feature.properties.place);
+        }
+      }).addTo(myMap);
+    
+      // Adding Legend
+      var legend = L.control({ position: 'bottomright' });
+    
+      legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend'),
+          grades = [0, 1, 2, 3, 4, 5];
+    
+        // Legend Label
+        div.innerHTML = 'Eathquake<br>Magnitude<br><hr>'
+    
+        // Loop through density intervals
+        for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+            '<i style="background:' + colorMag(grades[i] + 1) + '">&nbsp&nbsp&nbsp&nbsp</i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+        return div;
+      };
+      //Adds Legend
+      legend.addTo(myMap);
+    
+    }); 
+   
