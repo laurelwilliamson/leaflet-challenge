@@ -5,12 +5,12 @@ var map = L.map("mapid", {
 });
 
 // Create the tile layer that will be the background of our map
-L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/streets-v11.html?title=true&access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   maxZoom: 18,
   id: "mapbox.streets",
   accessToken: API_KEY
-}).addTo(myMap);
+}).addTo(map);
 
 var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
@@ -25,7 +25,7 @@ var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_w
             color: "#000000",
             radius: radiusMag(feature.properties.mag),
             stroke: true,
-            weight: 0.5
+            weight: 0.7
         };
         }
         // radius
@@ -67,23 +67,23 @@ var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_w
           return L.circleMarker(latlong);
         },
     
-        style: styleInfo,
+        style: ColorRadius,
     
         onEachFeature: function (feature, layer) {
     
           layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location:<br>" + feature.properties.place);
         }
-      }).addTo(myMap);
+      }).addTo(map);
     
       // Adding Legend
       var legend = L.control({ position: 'bottomright' });
     
       legend.onAdd = function (map) {
         var div = L.DomUtil.create('div', 'info legend'),
-          grades = [0, 1, 2, 3, 4, 5];
+          grades = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     
         // Legend Label
-        div.innerHTML = 'Eathquake<br>Magnitude<br><hr>'
+        div.innerHTML = 'Past<br>Seven<br>Days<br>of<br>Earthquakes<br>by<br>Magnitude<br><hr>'
     
         // Loop through density intervals
         for (var i = 0; i < grades.length; i++) {
@@ -94,7 +94,7 @@ var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_w
         return div;
       };
       //Adds Legend
-      legend.addTo(myMap);
+      legend.addTo(map);
     
     }); 
    
