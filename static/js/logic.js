@@ -16,29 +16,49 @@ var earthData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_w
 
   // D3 Function
   d3.json(earthData, function(data) {
-      // Color Function
-  function whichColor(magnitude) {
-    switch (true) {
-      case magnitude > 9:
-       return "#260301";
-      case magnitude > 8:
-       return "#350602";
-      case magnitude > 7:
-        return "#4B0803";
-      case magnitude > 6:
-        return "#6B0B03";
-      case magnitude > 5:
-        return "#920C02";
-      case magnitude > 4:
-        return "#B50F01";
-      case magnitude > 3:
-        return "#FB4D3F";
-      case magnitude > 2:
-        return "#FB9289";
-      case magnitude > 1:
-        return "#FBB8B2";
-      default:
-        return "#FFD3CF";
+//combines color and radius features
+    function ColorRadius(feature) {
+        return {
+            opacity: 1,
+            fillOpacity: 1,
+            fillColor: colorMag(feature.properties.mag),
+            color: "#000000",
+            radius: radiusMag(feature.properties.mag),
+            stroke: true,
+            weight: 0.5
+        };
+        }
+        // radius
+    function radiusMag(magnitude) {
+        if (magnitude === 0) {
+            return 1;
+        }
+        return magnitude * 5;
+        }
+        // color 
+    function colorMag(magnitude) {
+        switch (true) {
+        case magnitude > 9:
+        return "#260301";
+        case magnitude > 8:
+        return "#350602";
+        case magnitude > 7:
+            return "#4B0803";
+        case magnitude > 6:
+            return "#6B0B03";
+        case magnitude > 5:
+            return "#920C02";
+        case magnitude > 4:
+            return "#B50F01";
+        case magnitude > 3:
+            return "#FB4D3F";
+        case magnitude > 2:
+            return "#FB9289";
+        case magnitude > 1:
+            return "#FBB8B2";
+        default:
+            return "#FFD3CF";
+        }
     }
-  }
+
     
