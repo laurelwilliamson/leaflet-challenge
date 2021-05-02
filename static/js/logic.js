@@ -1,5 +1,5 @@
 // Create the map with our layers
-var map = L.map("map-id", {
+var map = L.map("mapid", {
   center: [40.73, -74.0059],
   zoom: 12
 });
